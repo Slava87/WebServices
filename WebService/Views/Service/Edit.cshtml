@@ -1,0 +1,66 @@
+﻿@using WebService.Models;
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/FormValidation.js")"/>
+}
+@model Service
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewData.ModelState.IsValid)
+{
+    if (@Model.ServiceName != null)
+    { 
+       ServiceName: Model.ServiceName
+       Email : @ViewBag.Email   
+    }
+}  
+
+@if (Model == null || Model.Id == 0)
+{
+    <h2>Create Service</h2>
+}
+else
+{
+    <h2>Edit Service</h2>
+}
+
+<p></p><p></p><p></p><p></p>
+
+@using (Html.BeginForm("Save", "Service", FormMethod.Post, new { name = "registrationform" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(n => n.Id)
+    <div class="form-group">
+
+        @Html.LabelFor(m => m.ServiceName)
+        @Html.TextBoxFor(m => m.ServiceName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ServiceName,"", new {@class = "error" })
+        <p></p><p></p><p></p>
+        @Html.LabelFor(m => m.ServiceType)
+        @Html.EnumDropDownListFor(m => m.ServiceType, new { @class = "form-control" })
+        <p></p><p></p><p></p>
+        @Html.LabelFor(m => m.Person.PhoneNumber)
+        @Html.TextBoxFor(m => m.Person.PhoneNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Person.PhoneNumber, "", new { @class = "error" })
+        <p></p><p></p><p></p>
+        @Html.LabelFor(m => m.Person.PersonName)
+        @Html.TextBoxFor(m => m.Person.PersonName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Person.PersonName, "", new { @class = "error" })
+
+    </div>
+    <div>
+        <p></p>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+}
+
+<style type="text/css">
+    .error {
+        color: red;
+        font-style: italic;
+    }
+</style>
