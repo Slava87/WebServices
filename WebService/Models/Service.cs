@@ -18,7 +18,6 @@ namespace WebService.Models
         [Display(Name = "Service")]
         public string ServiceName { get; set; }
 
-        //[Required]
         [Display(Name = "Type")]
         public ServiceType ServiceType { get; set; }
 
@@ -40,7 +39,7 @@ namespace WebService.Models
         public string PersonName { get; set; }
 
         [Required(ErrorMessage = "Phone Number Field is required")]
-        [RegularExpression(@"^([+]\d{1,2}-? *)?\(?\d{3}\)?-? *\d{3}-? *-?\d{2} *-?\d{2}$", ErrorMessage = "Try according to following examples: 0991231212, 099-123-12-12, +380991231212, +38-099-123-12-12")]
+        [RegularExpression(@"^([+]\d{1,2}-? *)?\(?\d{3}\)?-? *\d{3}-? *-?\d{2} *-?\d{2}$", ErrorMessage = "Try using following examples: 0991231212, 099-123-12-12, +380991231212, +38-099-123-12-12")]
         [Display(Name = "Phone Number")] 
         public string PhoneNumber { get; set; }
 
@@ -52,4 +51,6 @@ namespace WebService.Models
         public List<Service> Services { get; set; }
         public List<Person> Persons { get; set; }
     }
+
+    
 }

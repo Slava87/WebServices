@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using WebService.Models;
 
 namespace WebService.Controllers
@@ -38,14 +39,23 @@ namespace WebService.Controllers
             return View("Index", db.Services.ToList());
         }
 
+
+        public ActionResult EditService(int id)
+        {
+            return PartialView("_EditServicePartial", db.Services.ToList().FirstOrDefault(x => x.Id == id));
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(Service service)
+        public string Save(Service service)
         {
             //if (!ModelState.IsValid)
             //{
             //    return View("Edit", service);
             //}
+            Service newService = null;
+
             Service updateService = db.Services.ToList().FirstOrDefault(x => x.Id == service.Id);
             if (updateService != null)
             {
@@ -57,23 +67,21 @@ namespace WebService.Controllers
             }
             else
             {
-                db.Services.Add(new Service()
+                newService = new Service()
                 {
                     ServiceName = service.ServiceName,
                     ServiceType = service.ServiceType,
-                    Person = new Person() { PersonName = service.Person.PersonName, PhoneNumber = service.Person.PhoneNumber }
-                });
-            }
-
-
-
-
+                    Person =
+                        new Person() {PersonName = service.Person.PersonName, PhoneNumber = service.Person.PhoneNumber}
+                };
+                db.Services.Add(newService);
+            } 
             //db.Services.Add(new Service()
             //{
 
             //});
-            db.SaveChanges();
-            return RedirectToAction("Index", "Service", new { Id = service.Id });  //make changes later
+            db.SaveChanges();  
+            return JsonConvert.SerializeObject(newService ?? service);
         }
     }
 }

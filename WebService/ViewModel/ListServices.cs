@@ -9,5 +9,7 @@ namespace WebService.ViewModel
     public class ListServices
     {
         public List<Service> Services { get; set; }
+        public List<Person> Persons { get; set; }
+
     }
 }
