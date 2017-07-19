@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -11,11 +12,12 @@ namespace WebService.Models
 {
     public class Service
     {
+
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Service is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Field is required")]
         [StringLength(30, MinimumLength = 3, ErrorMessage = "The length must be between 3 and 30 symbols")]
-        [Display(Name = "Service")]
+        [Display(Name = "Service")] 
         public string ServiceName { get; set; }
 
         [Display(Name = "Type")]

@@ -1,4 +1,27 @@
 ﻿$(document).ready(function () {
+
+    //$('#testform').validate({
+
+    //    rules: {
+    //        ServiceName: {
+    //            required: true
+    //        },
+    //        inputtext : {
+    //            required:true
+    //        }
+
+    //    },
+    //    messages: {
+    //        ServiceName: {
+    //            requires: "Field1 is required"
+    //        },
+    //        inputtext: {
+    //            required: "Field is empty"
+    //        }
+    //    }
+    //});
+
+
     $('a[data-edit]').click(function () {
 
         var url = "/Service/EditService"; // the url to the controller
@@ -10,42 +33,33 @@
                 $('#id-dataSave').text('Save');
             } else {
                 $('#id-modal-title').text('Create Service');
-                ('#id-dataSave').text('Create');
+                $('#id-dataSave').text('Create');
             }
             $('#edit-service-container').html(data);
         });
 
-        $('#id-dataSave').click(function () {
-            $.post("/Service/Save", $("#testform").serialize(), function (data, textStatus) {
-
-                var parsedJson = $.parseJSON(data);
-                $('#service-name-' + parsedJson.Id).empty().text(parsedJson.ServiceName);
-                $("#edit-service .close").click();
-
-                //$('#edit-service').modal({ hide: true });
-                //alert("Data Loaded: " + parsedJson.ServiceName); 
-            });
-
-
-            //$.ajax({
-            //    type: "POST",
-            //    dataType: "json",
-            //    contentType: "application/json; charset=utf-8",
-            //    url: "/Service/Save",
-            //    data: JSON.stringify({ 
-            //        Id: "1", 
-            //        ServiceName: "blablacar111"
-            //    }),
-
-            //    success: function () {
-            //        alert('Success message.');
-            //    },
-            //    error: function() {
-            //        alert('Error message');
-            //    }
-            //});
-        });
-
         $('#edit-service').modal({ show: true });
     });
+
+    $('#id-dataSave').click(function () {
+
+        if ($('#testform').valid()) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Service/Save',
+                data: $('#testform').serialize(),
+
+                success: function (data) {
+                    $('#service-name-' + data.Id).empty().text(data.ServiceName);
+                    $('#service-type-' + data.Id).empty().text(data.ServiceType);
+                    $("#edit-service .close").click();
+                },
+                error: function (message) {
+                    alert(message);
+                }
+            });
+        };
+    });
+
 });

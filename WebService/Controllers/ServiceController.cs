@@ -15,10 +15,10 @@ namespace WebService.Controllers
             return View(db.Services.ToList());
         }
 
-        public ActionResult Edit(int id)
-        {
-            return View(db.Services.ToList().FirstOrDefault(x => x.Id == id));
-        }
+        //public ActionResult Edit(int id)
+        //{
+        //    return View(db.Services.ToList().FirstOrDefault(x => x.Id == id));
+        //}
 
         public ActionResult Delete(int id)
         {
@@ -31,9 +31,7 @@ namespace WebService.Controllers
                 db.Services.Remove(db.Services.Remove(service));
 
             if (servicesOfCurrentPersonCount == 1 && person != null)
-                db.Persons.Remove(person);
-
-
+                db.Persons.Remove(person); 
 
             db.SaveChanges();
             return View("Index", db.Services.ToList());
@@ -42,18 +40,15 @@ namespace WebService.Controllers
 
         public ActionResult EditService(int id)
         {
-            return PartialView("_EditServicePartial", db.Services.ToList().FirstOrDefault(x => x.Id == id));
+            return PartialView("_EditServicePartial",
+                db.Services.ToList().FirstOrDefault(x => x.Id == id) ?? new Service() {ServiceName = string.Empty});
         }
 
 
-        [HttpPost]
+        [HttpPost]   
         [ValidateAntiForgeryToken]
         public string Save(Service service)
-        {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View("Edit", service);
-            //}
+        {                  //todo error message and emptystring validation
             Service newService = null;
 
             Service updateService = db.Services.ToList().FirstOrDefault(x => x.Id == service.Id);
@@ -76,10 +71,7 @@ namespace WebService.Controllers
                 };
                 db.Services.Add(newService);
             } 
-            //db.Services.Add(new Service()
-            //{
 
-            //});
             db.SaveChanges();  
             return JsonConvert.SerializeObject(newService ?? service);
         }

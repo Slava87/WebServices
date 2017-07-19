@@ -180,7 +180,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
-    <Content Include="Views\Service\Edit.cshtml" />
     <None Include="Views\Service\_EditServicePartial.cshtml" />
     <Content Include="Views\Shared\_LayoutWithoutNavBar.cshtml" />
   </ItemGroup>

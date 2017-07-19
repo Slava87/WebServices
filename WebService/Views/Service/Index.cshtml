@@ -3,6 +3,9 @@
 {
     <script src="@Url.Content("~/Scripts/ModalConfirmation.js")"></script>
     <script src="@Url.Content("~/Scripts/ModalEdit.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>*@
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
 }
 
 @model List<Service>
@@ -52,7 +55,7 @@
     </div>
 </div>
 
-<table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover table-striped">
     <thead>
         <tr>
             <th>Service</th>
@@ -67,32 +70,52 @@
             {
             <tr>
                 <td id="service-name-@service.Id">@service.ServiceName</td>
-                <td id="td-@service.Id">@service.ServiceType</td>
+                <td id="service-type-@service.Id">@service.ServiceType</td>
                 <td id="phone-number-@service.Id">@service.Person.PhoneNumber</td>
                 <td id="person-name-@service.Id">@service.Person.PersonName</td>
                 <td>
-                    <a data-edit="Edit Service" data-id="@service.Id" href="#">Edit</a>
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <a href="@Url.Action("Delete", "Service", new {Id = service.Id}, null)" data-confirm="Are you sure you want to delete?">Delete</a>
+                    <div class="container">
+                        <div class="row col-md-6">
+                            <a data-edit="Edit Service" data-id="@service.Id" href="#">Edit</a>
+                        </div>
+                        <div class="row col-md-6">
+                            <a href="@Url.Action("Delete", "Service", new {Id = service.Id}, null)" data-confirm="Are you sure you want to delete?">Delete</a>
+                        </div>
+                    </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-<a href="@Url.Action("Edit", "Service", new {Id = 0})">Create</a>
+<div>
+    <a data-edit="Create Service" data-id="0" href="#">Create</a>
+</div>
+
+@*<form id="account_info">
+    <input type="text" name="phone_number" />
+    <br />
+    <input type="text" name="recipient_name" />
+    <br />
+    <input type="submit" />
+</form>*@
 
 <style type="text/css">
     .modal {
         text-align: center;
         padding: 0 !important;
+        overflow-y: auto;
     }
 
-        .modal:before {
-            content: '';
-            display: inline-block;
-            height: 100%;
-            vertical-align: middle;
-        }
+    body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+        margin-right: 0;
+    }
+
+    .modal:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
 
     .modal-dialog {
         display: inline-block;

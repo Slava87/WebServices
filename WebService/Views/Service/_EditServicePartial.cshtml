@@ -2,8 +2,8 @@
 @using WebService.Models;
 @section Scripts
 {
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
 }
 @model Service
 
@@ -12,49 +12,36 @@
     Layout = "~/Views/Shared/_LayoutWithoutNavBar.cshtml";
 }
 
-<div class="container" >
-    <div class="row">
-        @using (Html.BeginForm("Save", "Service", FormMethod.Post, new { id = "testform" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(n => n.Id)
-            <div class="form-group">
-                <div class="col increased-bottom-margin-20 col-md-12" >
-                    @Html.LabelFor(m => m.ServiceName)
-                    @Html.TextBoxFor(m => m.ServiceName, new { @class = "form-control"})
-                    @Html.ValidationMessageFor(m => m.ServiceName, "", new { @class = "error" })
-                </div>
 
-                <div class="col increased-bottom-margin-20 col-md-12">
-                    @Html.LabelFor(m => m.ServiceType)
-                    @Html.EnumDropDownListFor(m => m.ServiceType, new { @class = "form-control" })
-                </div>
+@using (Html.BeginForm("Save", "Service", FormMethod.Post, new { id = "testform" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(n => n.Id)
+    <div class="form-group">
+        <div class="col increased-bottom-margin-20 col-md-12">
+            @Html.LabelFor(m => m.ServiceName)
+            @Html.TextBoxFor(m => m.ServiceName, new { @class = "form-control", name = "ServiceName" })
+            @Html.ValidationMessageFor(m => m.ServiceName, "", new { @class = "error" })
+        </div>
 
-                <div class="col increased-bottom-margin-20 col-md-12">
-                    @Html.LabelFor(m => m.Person.PhoneNumber)
-                    @Html.TextBoxFor(m => m.Person.PhoneNumber, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Person.PhoneNumber, "", new { @class = "error" })
-                </div>
+        <div class="col increased-bottom-margin-20 col-md-12">
+            @Html.LabelFor(m => m.ServiceType)
+            @Html.EnumDropDownListFor(m => m.ServiceType, new { @class = "form-control" })
+        </div>
 
-                <div class="col increased-bottom-margin-20 col-md-12">
-                    @Html.LabelFor(m => m.Person.PersonName)
-                    @Html.TextBoxFor(m => m.Person.PersonName, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Person.PersonName, "", new { @class = "error" })
-                </div>
+        <div class="col increased-bottom-margin-20 col-md-12">
+            @Html.LabelFor(m => m.Person.PhoneNumber)
+            @Html.TextBoxFor(m => m.Person.PhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Person.PhoneNumber, "", new { @class = "error" })
+        </div>
 
-
-            </div>
-        }
+        <div class="col increased-bottom-margin-20 col-md-12">
+            @Html.LabelFor(m => m.Person.PersonName)
+            @Html.TextBoxFor(m => m.Person.PersonName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Person.PersonName, "", new { @class = "error" })
+        </div>
     </div>
-    <div class="row">
-
-    </div>
-</div>      
-
-<p></p>
-<p></p>
-<p></p>
-<p></p>   
+}
 
 <style type="text/css">
     .error {
@@ -63,11 +50,11 @@
     }
 
     .increased-bottom-margin-20 {
-        margin:0 0 20px 0
+        margin: 0 0 20px 0;
     }
 
     .increased-bottom-margin-40 {
-        margin: 0 0 40px 0; 
+        margin: 0 0 40px 0;
     }
 
     .edit-form-width {
@@ -75,7 +62,6 @@
     }
 
     .form-width-control {
-        width: 400px
+        width: 400px;
     }
 </style>
-
